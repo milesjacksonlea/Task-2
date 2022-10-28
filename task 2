@@ -1,0 +1,26 @@
+import netmiko
+import difflib
+
+connectionInfo = {
+    'device_type':'cisco_ios',
+    'host':'192.168.1.1',
+    'username':'cisco',
+    'password':'cisco',
+    'secret':'class'
+}
+
+session = netmiko.ConnectHandler(**connectionInfo)
+session.enable()
+config = session.send_command("sh running-config")
+startup_config = session.send_command("sh startup-config")
+file = open("config-output.txt", "w")
+file.write(config)
+file.close()
+
+print("your config is successful")
+
+config = session.send_command("sh running-config")
+startup_config = session.send_command("sh startup-config")
+difflib.context_diff(config, startup_config)
+for diff in difflib.context_diff(config, startup_config):
+    print(diff)
