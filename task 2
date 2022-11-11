@@ -17,13 +17,15 @@ file = open("config-output.txt", "w")
 file.write(config)
 file.close()
 
-backupfile = open("config-output.txt", "r")
-
 print("your config is successful")
+choice = input("Choose A to compare against current startup configuration or choose B to compare against local offline version ")
 
+if choice == "A":
+    for diff in difflib.context_diff(config.split("\n"), startup_config.split("\n")):
+        print(diff)
 
-for diff in difflib.context_diff(config.split("\n"), startup_config.split("\n"):
-    print(diff)
-
-for diff in difflib.context_diff(config.split("\n"), backupfile.readlines()):
-    print(diff)
+elif choice == "B":
+    backupfile = open("config-output.txt", "r")
+    for diff in difflib.context_diff(config.split("\n"), backupfile.readlines()):
+        print(diff)
+    
