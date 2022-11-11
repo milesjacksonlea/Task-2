@@ -17,10 +17,13 @@ file = open("config-output.txt", "w")
 file.write(config)
 file.close()
 
+backupfile = open("config-output.txt", "r")
+
 print("your config is successful")
 
-config = session.send_command("sh running-config")
-startup_config = session.send_command("sh startup-config")
-difflib.context_diff(config, startup_config)
-for diff in difflib.context_diff(config, startup_config):
+
+for diff in difflib.context_diff(config.split("\n"), startup_config.split("\n"):
+    print(diff)
+
+for diff in difflib.context_diff(config.split("\n"), backupfile.readlines()):
     print(diff)
